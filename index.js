@@ -89,3 +89,48 @@ dataFile('text.txt')
 .then(reponse=>{
     console.log(reponse)
 })
+/**********************Bài 8: Promise liên tiếp**********************/
+//Bài toán tính: (a+b)+c
+let addNumber=(a,b)=>{
+    return new Promise((resolve,reject)=>{
+        if(typeof a!='number'){
+            reject(new Error('a phải là một số'))
+        }
+        resolve(a+b);
+    })
+}
+addNumber(5,8)
+.then(reponse1=>add(reponse1,9))//do reponse1 là kết quả trả về từ promise dòng 102 nên ta sẽ lấy kết quả đó + 9 luôn mà không in ra như những bài trước
+.then(reponse2=>console.log("Kết quả của 5+8+9="+reponse2))//bây giờ then này thực hiện promise ở dòng 103, và ta lấy kết quả của phép tính đó in ra 
+.catch(err=>console.log(err+' '))
+
+//Tính diện tích hình thang
+let mul=(a,b)=>{
+    return new Promise((resolve,reject)=>{
+        if(typeof a!='number'){
+            reject(new Error('a phải là một số'))
+        }
+        resolve(a*b);
+    })
+}
+let divide=(a,b)=>{
+    return new Promise((resolve,reject)=>{
+        if(typeof a!='number'){
+            reject(new Error('a phải là một số'))
+        }
+        resolve(a/b);
+    })
+}
+let area=(a,b,h)=>{
+    return addNumber(a,b)
+           .then(res=>mul(res,h))
+           .then(result=>divide(result,2))
+        //     Ta có thể làm ngay như bên dưới để in ra kq và lỗi nhưng trong thực tế khi ta xử lý các promise
+        //     ta sẽ gửi về cho ng dùng hoặc server nên ta sẽ return ra kq đó và làm việc với nó ở ngoài
+        //     Khi ta return như trên thì vốn nó sẽ trả về 1 promise do các hàm trong đó đều trả về 1 promise
+        //    .then(kq=>console.log("kq=",kq))
+        //    .catch(err=>console.log(err+' '))
+}
+area(5,6,7)
+.then(res=>console.log('Dien tich hinh thang ',res))
+.catch(err=>console.log(err+''))
