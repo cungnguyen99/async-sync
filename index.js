@@ -94,7 +94,7 @@ dataFile('text.txt')
 let addNumber=(a,b)=>{
     return new Promise((resolve,reject)=>{
         if(typeof a!='number'){
-            reject(new Error('a phải là một số'))
+            reject(new Error('a phải là một số +'))
         }
         resolve(a+b);
     })
@@ -108,7 +108,7 @@ addNumber(5,8)
 let mul=(a,b)=>{
     return new Promise((resolve,reject)=>{
         if(typeof a!='number'){
-            reject(new Error('a phải là một số'))
+            reject(new Error('a phải là một số *'))
         }
         resolve(a*b);
     })
@@ -133,4 +133,26 @@ let area=(a,b,h)=>{
 }
 area(5,6,7)
 .then(res=>console.log('Dien tich hinh thang ',res))
+.catch(err=>console.log(err+''))
+
+/************************Bài 11: Phương thức all và race*********************/
+//Promise.all trả về 1 mảng các promise và nếu có lỗi ở reject nào thì nó sẽ gọi vào reject của promise đó, nếu có nhiều promise bị reject thì nó sẽ gọi lỗi của promise bị reject trước tiên
+Promise.all([addNumber(4,5),mul(4,5)])
+.then(res=>console.log(res))
+.catch(err=>console.log(err+''))
+Promise.all([addNumber("4",5),mul(4,"5")])
+.then(res=>console.log(res))
+.catch(err=>console.log(err+''))//sẽ chạy vào lỗi của promise bị lỗi đầu tiên
+
+//Promise.race truyền vào 1 mảng các promise nhưng chỉ trả về kết quả của promise đầu tiên kể cả promise đầu tiên lỗi hay không lỗi vẫn trả về. lỗi thì trả về lỗi, có kết quả thì trả về kq
+Promise.race([addNumber(4,5),mul(4,5)])
+.then(res=>console.log(res))
+.catch(err=>console.log(err+''))
+//trả về reject của promise đầu tiên
+Promise.race([addNumber("4",5),mul(4,5)])
+.then(res=>console.log(res))
+.catch(err=>console.log(err+''))
+//trả về resolve của promise đầu tiên
+Promise.race([addNumber(4,5),mul("4",5)])
+.then(res=>console.log(res))
 .catch(err=>console.log(err+''))
