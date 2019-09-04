@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<body>
+    <script>
+        /**
+         * Một promise có 2 thuộc tính là PromiseStatus gồm pending, resolved và reject
+         * Thuộc tính 2 là PromiseValue chính là giá trị ta truyền trong resolve hoặc reject 
+         * tùy vào từng trường hợp promise ở trạng thái nào mà nó sẽ có gtri đó. Thay 5 bằng "5" sẽ biết
+         * với promise ở trạng thái pending PromiseStatus có giá trị mặc định là undefined
+         */
+        let addNumber = (a, b) => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if (typeof a != 'number') {
+                        reject(new Error('a phải là một số'))
+                    }
+                    resolve(a + b);
+                }, 1000)
+            })
+        }
+        let a = addNumber("5", 8)
+                .then(res=>"kq="+res,
+                      err=>"bị lỗi "+err)
+        console.log(a)
+        setTimeout(()=>console.log(a),1500)
+    </script>
+</body>
+
+</html>
