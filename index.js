@@ -207,3 +207,21 @@ let tinhDT=async (a,b,h)=>{
 
 }
 tinhDT(4,"5",56)
+
+/******************* Bài 15: Async function trả về promise**********************/
+//Nếu ta sd async như trên thì k thể tái sd lại kq trong hàm tính dt nên ta cần phải return n về 1 promise
+let tinhDTHT=async (a,b,h)=>{
+    try {
+        let ab=await addNumber(a,b);
+        let abh=await mul(ab,h);
+        let square= await div(abh,2);
+        // Vì trong try sẽ trả về 1 kq nên cứ trả về kq ta sẽ cho nó vào resolve
+        return Promise.resolve(square)
+    } catch (error) {
+        return Promise.reject(error)
+    }
+
+}
+tinhDTHT(4,6,56)
+.then(res=>console.log('Kq dòng 226',res))
+.catch(err=>console.log(err))
