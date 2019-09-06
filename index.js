@@ -104,6 +104,17 @@ addNumber(5,8)
 .then(reponse2=>console.log("Kết quả của 5+8+9="+reponse2))//bây giờ then này thực hiện promise ở dòng 103, và ta lấy kết quả của phép tính đó in ra 
 .catch(err=>console.log(err+' '))
 
+//Tính các phép cộng và in ra
+addNumber(4,5)//promise đầu tiên trả về kq res trong then dòng 108
+.then(res=>{
+    console.log('res dòng 110',res)//log ra kq của promise dòng 108
+    return addNumber(6,7)//ở đây return ra 1 promise nữa và nó trả về kq ở then dòng 113
+})
+.then(res=>{
+    console.log('then dòng 115',res)//log ra kq ở promise dòng 111
+    return addNumber(6,8)//return ra 1 promise nữa 
+})
+.then(res=>console.log('then dòng 117',res))
 //Tính diện tích hình thang
 let mul=(a,b)=>{
     return new Promise((resolve,reject)=>{
@@ -144,6 +155,10 @@ Promise.all([addNumber("4",5),mul(4,"5")])
 .then(res=>console.log(res))
 .catch(err=>console.log(err+''))//sẽ chạy vào lỗi của promise bị lỗi đầu tiên
 
+//promise all làm bài tính 1 loạt phép toán
+Promise.all([addNumber(4,5),addNumber(7,8),addNumber(3,5)])
+.then(res=>console.log('then dòng 160',res))
+.catch(err=>console.log(err))
 //Promise.race truyền vào 1 mảng các promise nhưng chỉ trả về kết quả của promise đầu tiên kể cả promise đầu tiên lỗi hay không lỗi vẫn trả về. lỗi thì trả về lỗi, có kết quả thì trả về kq
 Promise.race([addNumber(4,5),mul(4,5)])
 .then(res=>console.log(res))
@@ -156,3 +171,17 @@ Promise.race([addNumber("4",5),mul(4,5)])
 Promise.race([addNumber(4,5),mul("4",5)])
 .then(res=>console.log(res))
 .catch(err=>console.log(err+''))
+
+
+/*******************Bài 13: Làm quen với async – await**********************/
+let as=async ()=>{
+    /**
+     * lúc đầu k có await thì n trả về 1 promise đang ở trạng thái pending 
+     * có nghĩa dòng 182 chưa chạy xong thì n đã chạy đến dòng 183 
+     * nhưng khi cho await vào thì n sẽ đợi cho chạy xong dòng 183 
+     * đợi n trả về kq cho sum rồi mới chạy tiếp đến dòng 184
+     */
+    let sum=await addNumber(4,5)
+    console.log("kq dong 179",sum)
+}
+as();
