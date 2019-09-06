@@ -185,3 +185,25 @@ let as=async ()=>{
     console.log("kq dong 179",sum)
 }
 as();
+/*******************Bài 14: Sử dụng await liên tiếp**********************/
+let tinhdientich=async (a,b,h)=>{
+    let ab=await addNumber(a,b);
+    let abh=await mul(ab,h);
+    let square= await div(abh,2);
+    console.log("kq dong 193",square);
+}
+tinhdientich(4,5,6)
+
+//Nhưng vì async khong có then hay catch nên ta không thể hender lỗi thì ta phải try catch nó để khi có lỗi n không xuất ra 1 đống dòng mà chỉ ra dòng lỗi mà ta đã viết trong reject thôi
+let tinhDT=async (a,b,h)=>{
+    try {
+        let ab=await addNumber(a,b);
+        let abh=await mul(ab,h);
+        let square= await div(abh,2);
+        console.log("kq dong 203",square);
+    } catch (error) {
+        console.log('lỗi dòng 205 '+error)
+    }
+
+}
+tinhDT(4,"5",56)
